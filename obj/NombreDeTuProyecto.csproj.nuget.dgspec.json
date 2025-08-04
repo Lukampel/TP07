@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\PROG 25'\\TP07\\NombreDeTuProyecto\\NombreDeTuProyecto.csproj": {}
+    "Z:\\PROG 25'\\TP07\\TP07\\NombreDeTuProyecto.csproj": {}
   },
   "projects": {
-    "Z:\\PROG 25'\\TP07\\NombreDeTuProyecto\\NombreDeTuProyecto.csproj": {
+    "Z:\\PROG 25'\\TP07\\TP07\\NombreDeTuProyecto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\PROG 25'\\TP07\\NombreDeTuProyecto\\NombreDeTuProyecto.csproj",
+        "projectUniqueName": "Z:\\PROG 25'\\TP07\\TP07\\NombreDeTuProyecto.csproj",
         "projectName": "NombreDeTuProyecto",
-        "projectPath": "Z:\\PROG 25'\\TP07\\NombreDeTuProyecto\\NombreDeTuProyecto.csproj",
+        "projectPath": "Z:\\PROG 25'\\TP07\\TP07\\NombreDeTuProyecto.csproj",
         "packagesPath": "C:\\Users\\48860067\\.nuget\\packages\\",
-        "outputPath": "Z:\\PROG 25'\\TP07\\NombreDeTuProyecto\\obj\\",
+        "outputPath": "Z:\\PROG 25'\\TP07\\TP07\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -48,6 +48,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.66, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

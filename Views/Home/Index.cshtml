@@ -1,8 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Iniciar Sesión</h2>
+
+@if (ViewBag.Mensaje != null)
+{
+    <p><p class="message">@ViewBag.Mensaje</p>
+</p>
+}
+
+<form method="post" asp-action="Perfil">
+    <p>Nombre de usuario:</p>
+    <input type="text" name="NombreUsuario" required />
+
+    <p>Contraseña:</p>
+    <input type="password" name="contrasena" required />
+
+    <br />
+    <button type="submit">Iniciar Sesión</button>
+</form>
+
+<br />
+
+<form method="get" asp-action="Registro">
+    <button type="submit">Registrarse</button>
+</form>
+

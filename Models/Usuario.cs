@@ -1,6 +1,6 @@
 public class Usuario
 {
-    public string NombreUsuario { get; set; }
+    public string Nombre { get; set; }
     public string Contrasena { get; set; }
   
 
@@ -11,7 +11,7 @@ public bool InicioSesion(string ContrasenaIngresada)
 }
 
 public bool ElUsuarioExiste(string NombreUsuarioIngresado){
-    return NombreUsuario == NombreUsuarioIngresado;
+    return Nombre == NombreUsuarioIngresado;
 }
 
 }

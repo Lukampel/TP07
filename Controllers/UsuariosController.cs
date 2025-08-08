@@ -15,7 +15,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        if(HttpContext.Session.GetString("user") == null){
+        return View("Index");
+        } else{
+            return View("Tareas");
+        }
     }
 
     public IActionResult Perfil(string NombreUsuario, string contrasena)
@@ -24,9 +28,9 @@ public class HomeController : Controller
 
     if (UsuarioPerfil != null && UsuarioPerfil.InicioSesion(contrasena))
     {
-        HttpContext.Session.SetString("NombreUsuario", UsuarioPerfil.NombreUsuario);
+        HttpContext.Session.SetString("Nombre", UsuarioPerfil.Nombre);
         ViewBag.Usuario = UsuarioPerfil;
-        return View("Perfil");
+        return View("Tareas");
     }
     else
     {
@@ -40,7 +44,10 @@ public IActionResult CerrarSesion()
     HttpContext.Session.Clear(); 
     return RedirectToAction("Index"); 
 }
-public IActionResult Registrar(string NombreUsuarioIngresado, string Contrasena){
+
+
+public IActionResult Registrar(string NombreUsuarioIngresado, string Contrasena)
+{
     ViewBag.Mensaje = "";
     if(BaseDeDatosUsuarios.LevantarUsuario(NombreUsuarioIngresado) == null){
         BaseDeDatosUsuarios.AgregarUsuario(NombreUsuarioIngresado, Contrasena);
@@ -51,9 +58,7 @@ public IActionResult Registrar(string NombreUsuarioIngresado, string Contrasena)
         return RedirectToAction("Index");
     }
 }
-public IActionResult Registro()
-{
-    return View();
+public IActionResult Registro(){
+    return View("Registro");
 }
-
 }

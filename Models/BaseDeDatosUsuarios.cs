@@ -3,9 +3,9 @@ using Dapper;
 
 namespace TP07.Models;
 
-public static class BaseDeDatosUsuarios
+public class BaseDeDatosUsuarios
 {
-   private static string _connectionString = @"Server=localhost;DataBase=TP07;Integrated Security=True;TrustServerCertificate=True;";
+   private static string _connectionString = @"Server=localhost;DataBase=TP07PROG;Integrated Security=True;TrustServerCertificate=True;";
 
     public static Usuario LevantarUsuario(string nombreUsuario)
 {
@@ -13,14 +13,14 @@ public static class BaseDeDatosUsuarios
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
 string query = @"SELECT 
-                    NombreUsuario, 
-                    Contrasena, 
+                    Nombre, 
+                    Contrasena 
                 FROM Usuarios 
-                WHERE NombreUsuario = @NombreUsuario";
+                WHERE Nombre = @pnombreUsuario";
 
 
        miUsuario = connection.QueryFirstOrDefault<Usuario>(
-    query, new { NombreUsuario = nombreUsuario });
+    query, new { pnombreUsuario = nombreUsuario });
 
     }
     return miUsuario;
@@ -28,10 +28,10 @@ string query = @"SELECT
 
 public static void AgregarUsuario(string NombreUsuarioIngresado, string Contrasena)
 {
-    string query = "INSERT INTO Usuarios (NombreUsuario, Contrasena) VALUES (@NombreUsuarioIngresado, @pContrasena)";
+    string query = "INSERT INTO Usuarios (Nombre, Contrasena) VALUES (@pNombreUsuarioIngresado, @pContrasena)";
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        connection.Execute(query, new { pNombreUsuario = NombreUsuarioIngresado, pContrasena = Contrasena});
+        connection.Execute(query, new { pNombreUsuarioIngresado = NombreUsuarioIngresado, pContrasena = Contrasena});
     }
 }
 

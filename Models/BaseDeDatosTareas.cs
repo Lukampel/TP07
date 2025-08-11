@@ -3,25 +3,55 @@ using Dapper;
 
 namespace TP07.Models;
 
-public class BaseDeDatosTareas{
-    public List<Tarea> LevantarTareas()
+public class BaseDeDatosTareas
 {
-    List<Tarea> tareas = new List<Tarea>();
+    private static string _connectionString = @"Server=localhost;DataBase=TP07PROG;Integrated Security=True;TrustServerCertificate=True;";
+
+    public static List<Tarea> LevantarTareas()
+    {
+        List<Tarea> tareas = new List<Tarea>();
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT * FROM Tareas";
+            tareas = connection.Query<Tarea>(query).ToList();
+        }
+        return tareas;
+    }
+    public static void AgregarTarea(Tarea tar)
+    {
+        string query = "INSERT INTO Tareas (NombreTarea, Descripcion, Activo, TareaFinalizada) VALUES (@pNombreTarea, @pDescripcion, @pActivo, @pTareaFinalizada)";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActivo = tar.Activo,pTareaFinalizada = tar.TareaFinalizada});
+        }
+    }
+    public static void EditarTarea(Tarea tar) 
+    {
+        string query = "UPDATE Tareas SET (NombreTarea, Descripcion, Activo, TareaFinalizada) VALUES (@pNombreTarea, @pDescripcion, @pActivo, @pTareaFinalizada)";
+         using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActivo = tar.Activo, pTareaFinalizada = tar.TareaFinalizada });
+        }
+    }
+    public static void EliminarTarea(Tarea tar) 
+    {
+    string query = "UPDATE Tareas SET Activo = 0 WHERE IdTarea = @IdTarea";
+
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        string query = "SELECT * FROM Tareas";
-        tareas = connection.Query<Patente>(query).ToList();
+        connection.Execute(query, new { tar.IdTarea });
+   }
+
     }
-    return tareas;
-}
-public void AgregarTarea(Tarea tar)
+   public static void TerminarTarea(Tarea tar) 
 {
-    string query = "INSERT INTO Tareas (NombreTarea, Descripcion, IdTarea, Activo) VALUES (@pNombreTarea, @pDescripcion, @pIdTarea, @pActivo)";
+    string query = "UPDATE Tareas SET TareaFinalizada = 0 WHERE IdTarea = @IdTarea";
+
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pIdTarea = tar.IdTarea, pActivo = tar.Activo });
-    }
-}
+        connection.Execute(query, new { tar.IdTarea });
+   }
+   }
 
 
 }

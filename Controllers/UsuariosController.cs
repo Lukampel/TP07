@@ -4,11 +4,11 @@ using TP07.Models;
 
 namespace TP07.Controllers;
 
-public class HomeController : Controller
+public class UsuariosController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<UsuariosController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public UsuariosController(ILogger<UsuariosController> logger)
     {
         _logger = logger;
     }
@@ -18,7 +18,7 @@ public class HomeController : Controller
         if(HttpContext.Session.GetString("user") == null){
         return View("Index");
         } else{
-            return View("Tareas");
+            return View("ListaTareas");
         }
     }
 
@@ -30,7 +30,7 @@ public class HomeController : Controller
     {
         HttpContext.Session.SetString("Nombre", UsuarioPerfil.Nombre);
         ViewBag.Usuario = UsuarioPerfil;
-        return View("Tareas");
+        return View("ListaTareas");
     }
     else
     {
@@ -52,13 +52,14 @@ public IActionResult Registrar(string NombreUsuarioIngresado, string Contrasena)
     if(BaseDeDatosUsuarios.LevantarUsuario(NombreUsuarioIngresado) == null){
         BaseDeDatosUsuarios.AgregarUsuario(NombreUsuarioIngresado, Contrasena);
         ViewBag.Mensaje = "Usuario creado correctamente";
-        return View("Tareas");
+        return View("ListaTareas");
     } else {
         ViewBag.Mensaje = "El nombre ya está en uso";
         return RedirectToAction("Index");
     }
 }
-public IActionResult Registro(){
+public IActionResult Registro()
+{
     return View("Registro");
 }
 }

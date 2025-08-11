@@ -18,24 +18,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = Z:\PROG 25'\TP07\TP07
 build_property._RazorSourceGeneratorDebug = 
 
-[Z:/PROG 25'/TP07/TP07/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[Z:/PROG 25'/TP07/TP07/Views/Home/Registro.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Ryby5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[Z:/PROG 25'/TP07/TP07/Views/Home/Tareas.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUYXJlYXMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [Z:/PROG 25'/TP07/TP07/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [Z:/PROG 25'/TP07/TP07/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[Z:/PROG 25'/TP07/TP07/Views/Tareas/ListaTareas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFzXExpc3RhVGFyZWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[Z:/PROG 25'/TP07/TP07/Views/Usuarios/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[Z:/PROG 25'/TP07/TP07/Views/Usuarios/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcUmVnaXN0cm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [Z:/PROG 25'/TP07/TP07/Views/_ViewImports.cshtml]

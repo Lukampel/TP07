@@ -1,0 +1,12 @@
+@{
+   
+    ViewData["Title"] = "ListaTareas";
+}
+<div>
+@foreach(Tarea tarea in ViewBag.ListaTareas){
+    ViewBag.NumeroTarea++;
+    <h3>@ViewBag.NumeroTarea</h3>
+    <p>Nombre: @tarea.NombreTarea</p>
+    <a href='@Url.Action("EliminarTarea", new{Id = tarea.IdTarea})'></a>
+}
+</div>

@@ -18,7 +18,7 @@ public class UsuariosController : Controller
         if(HttpContext.Session.GetString("user") == null){
         return View("Index");
         } else{
-            return View("ListaTareas");
+            return RedirectToAction("ListaTareas", "Tareas");
         }
     }
 
@@ -28,9 +28,9 @@ public class UsuariosController : Controller
 
     if (UsuarioPerfil != null && UsuarioPerfil.InicioSesion(contrasena))
     {
-        HttpContext.Session.SetString("Nombre", UsuarioPerfil.Nombre);
+        HttpContext.Session.SetString("user", Objeto.ObjectToString<Usuario>(UsuarioPerfil));
         ViewBag.Usuario = UsuarioPerfil;
-        return View("ListaTareas");
+        return RedirectToAction("ObtenerListaTareas", "Tareas");
     }
     else
     {

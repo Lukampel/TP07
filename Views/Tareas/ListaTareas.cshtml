@@ -4,9 +4,12 @@
 }
 <div>
 @foreach(Tarea tarea in ViewBag.ListaTareas){
-    ViewBag.NumeroTarea++;
+    if(tarea.Activo=false){
+     <h2>No</h2>
+    } 
+    else{ViewBag.NumeroTarea++;
     <h3>@ViewBag.NumeroTarea</h3>
     <p>Nombre: @tarea.NombreTarea</p>
-    <a href='@Url.Action("EliminarTarea", new{Id = tarea.IdTarea})'></a>
+    <a href='@Url.Action("EliminarTarea", new{Id = tarea.IdTarea})'></a>}
 }
 </div>

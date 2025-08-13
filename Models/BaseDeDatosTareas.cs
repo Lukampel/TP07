@@ -7,16 +7,24 @@ public class BaseDeDatosTareas
 {
     private static string _connectionString = @"Server=localhost;DataBase=TP07PROG;Integrated Security=True;TrustServerCertificate=True;";
 
-    public static List<Tarea> LevantarTareas()
+ public static List<Tarea> LevantarTareas(string nombreUsuario)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        List<Tarea> tareas = new List<Tarea>();
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string query = "SELECT * FROM Tareas";
-            tareas = connection.Query<Tarea>(query).ToList();
-        }
+        string query = @"
+            SELECT t.IdTarea, t.Descripcion, t.FechaVencimiento
+            FROM Tareas t
+            INNER JOIN UsuarioXTareas ut ON ut.IdTarea = t.IdTarea 
+            INNER JOIN Usuarios u ON ut.IdUsuario = u.IdUsuario
+            WHERE u.Nombre = @pNombreUsuario";
+
+        var tareas = connection.Query<Tarea>(
+            query, new { pNombreUsuario = nombreUsuario }).ToList();
+
         return tareas;
     }
+}
+
     public static void AgregarTarea(Tarea tar)
     {
         string query = "INSERT INTO Tareas (NombreTarea, Descripcion, Activo, TareaFinalizada) VALUES (@pNombreTarea, @pDescripcion, @pActivo, @pTareaFinalizada)";

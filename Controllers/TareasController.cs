@@ -34,39 +34,56 @@ public IActionResult CrearTarea(Tarea nuevaTarea)
 }
 
 
-public IActionResult EditarTarea(string NombreTarea, string Descripcion, bool Activa, bool TareaFinalizada)
+public IActionResult EditarTarea(int id)
 {
-    Tarea tareaParaEditar = new Tarea
-    {
-        NombreTarea = NombreTarea,
-        Descripcion = Descripcion,
-        Activa = Activa,
-        TareaFinalizada = TareaFinalizada
-    };
+    Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
+    Tarea tarea = BaseDeDatosTareas.LevantarTareas(usu.Nombre).FirstOrDefault(t => t.IdTarea == id);
 
-   
+    return View("EditarTarea", tarea);
+}
+
+[HttpPost]
+public IActionResult EditarTarea(Tarea tareaParaEditar)
+{
+
+    if (tareaParaEditar.FechaVencimiento < new DateTime(1753, 1, 1) || tareaParaEditar.FechaVencimiento > new DateTime(9999, 12, 31))
+    {
+        ModelState.AddModelError("FechaVencimiento", "La fecha debe estar entre 01/01/1753 y 31/12/9999.");
+        return View("EditarTarea", tareaParaEditar);
+    }
+
+
+    if (!ModelState.IsValid)
+        return View("EditarTarea", tareaParaEditar);
+
+
     BaseDeDatosTareas.EditarTarea(tareaParaEditar);
 
-    return RedirectToAction("ObtenerListaTareas");
-}
-
-public IActionResult EliminarTarea(Tarea tarea){
-    
-    Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
-
-    ViewBag.ListaTareas = BaseDeDatosTareas.LevantarTareas(usu.Nombre);
-    BaseDeDatosTareas.EliminarTarea(tarea);
 
     return RedirectToAction("ObtenerListaTareas");
 }
-public IActionResult FinalizarTarea(int Id){
 
+public IActionResult EliminarTarea(int id)
+{
     Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
-    ViewBag.ListaTareas = BaseDeDatosTareas.LevantarTareas(usu.Nombre);
+    var tarea = BaseDeDatosTareas.LevantarTareas(usu.Nombre).FirstOrDefault(t => t.IdTarea == id);
+    if (tarea != null)
+    {
+        BaseDeDatosTareas.EliminarTarea(tarea);
+    }
+    return RedirectToAction("ObtenerListaTareas");
+}
 
-    if(ViewBag.ListaTareas[Id].Activa)
-    ViewBag.ListaTareas[Id].Activa = false;
-
+public IActionResult FinalizarTarea(int id)
+{
+    Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
+    var tarea = BaseDeDatosTareas.LevantarTareas(usu.Nombre).FirstOrDefault(t => t.IdTarea == id);
+    if (tarea != null && tarea.Activa)
+    {
+        tarea.Activa = false;
+        tarea.TareaFinalizada = true;
+        BaseDeDatosTareas.EditarTarea(tarea);
+    }
     return RedirectToAction("ObtenerListaTareas");
 }
 

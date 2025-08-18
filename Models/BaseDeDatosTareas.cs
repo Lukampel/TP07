@@ -5,14 +5,14 @@ namespace TP07.Models;
 
 public class BaseDeDatosTareas
 {
-    private static string _connectionString = @"Server=localhost;DataBase=TP07PROG;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost\SQLEXPRESS;DataBase=TP07PROG;Integrated Security=True;TrustServerCertificate=True;";
 
  public static List<Tarea> LevantarTareas(string nombreUsuario)
 {
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = @"
-            SELECT t.IdTarea, t.Descripcion, t.FechaVencimiento , t.NombreTarea, t.Activa
+            SELECT t.IdTarea, t.Descripcion, t.FechaVencimiento , t.NombreTarea, t.Activa, t.TareaFinalizada
             FROM Tareas t
             INNER JOIN UsuarioXTareas ut ON ut.IdTarea = t.IdTarea 
             INNER JOIN Usuarios u ON ut.IdUsuario = u.IdUsuario
@@ -35,10 +35,10 @@ public class BaseDeDatosTareas
     }
     public static void EditarTarea(Tarea tar) 
     {
-        string query = "UPDATE Tareas SET (NombreTarea, Descripcion, Activa, TareaFinalizada, FechaVencimiento) VALUES (@pNombreTarea, @pDescripcion, @pActiva, @pTareaFinalizada, @pFechaVencimiento)";
+        string query = "UPDATE Tareas SET NombreTarea = @pNombreTarea, Descripcion = @pDescripcion, Activa = @pActiva, TareaFinalizada = @pTareaFinalizada, FechaVencimiento = @pFechaVencimiento WHERE IdTarea = @pIdTarea";
          using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActiva = tar.Activa, pTareaFinalizada = tar.TareaFinalizada, pFechaVencimiento = tar.FechaVencimiento });
+            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActiva = tar.Activa, pTareaFinalizada = tar.TareaFinalizada, pFechaVencimiento = tar.FechaVencimiento, pIdTarea = tar.IdTarea });
         }
     }
     public static void EliminarTarea(Tarea tar) 

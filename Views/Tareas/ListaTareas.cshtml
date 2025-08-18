@@ -12,7 +12,7 @@
     {
         if (tareat.Activa == false)
         {
-            <h4>(Tarea eliminada)</h4>
+            <h4></h4>
         }
         else
         {
@@ -24,10 +24,10 @@
             <p><b>Finalizada:</b> @(tareat.TareaFinalizada ? "✅" : "❌")</p>
 
             <!-- Botones -->
-            <a href='@Url.Action("EditarTarea", "Tareas", new { tarea = tareat })' class="btn btn-primary btn-sm">✏️ Editar</a>
-            <a href='@Url.Action("EliminarTarea", "Tareas", new { tarea = tareat })' class="btn btn-danger btn-sm">🗑️ Eliminar</a>
-            <a href='@Url.Action("FinalizarTarea", "Tareas", new { tarea = tareat })' class="btn btn-warning btn-sm">✅ Finalizar</a>
-            <a href='@Url.Action("CompartirTarea", "Tareas", new { tarea = tareat })' class="btn btn-info btn-sm">👥 Compartir</a>
+            <a href='@Url.Action("EditarTarea", "Tareas", new { id = tareat.IdTarea })' class="btn btn-primary btn-sm">✏️ Editar</a>
+            <a href='@Url.Action("EliminarTarea", "Tareas", new { id = tareat.IdTarea })' class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+            <a href='@Url.Action("FinalizarTarea", "Tareas", new { id = tareat.IdTarea })' class="btn btn-warning btn-sm">✅ Finalizar</a>
+            <a href='@Url.Action("CompartirTarea", "Tareas", new { id = tareat.IdTarea })' class="btn btn-info btn-sm">👥 Compartir</a>
         }
     }
 </div>

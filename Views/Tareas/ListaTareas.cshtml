@@ -1,15 +1,33 @@
 @{
-   
     ViewData["Title"] = "ListaTareas";
 }
+
 <div>
-@foreach(Tarea tarea in ViewBag.ListaTareas){
-    if(tarea.Activo=false){
-     <h2>No</h2>
-    } 
-    else{ViewBag.NumeroTarea++;
-    <h3>@ViewBag.NumeroTarea</h3>
-    <p>Nombre: @tarea.NombreTarea</p>
-    <a href='@Url.Action("EliminarTarea", new{Id = tarea.IdTarea})'></a>}
-}
+    <h2>Mis tareas activas</h2>
+
+
+    <a href='@Url.Action("NuevaTarea", "Tareas")' class="btn btn-success">➕ Nueva tarea</a>
+
+    @foreach (Tarea tareat in ViewBag.ListaTareas)
+    {
+        if (tareat.Activa == false)
+        {
+            <h4>(Tarea eliminada)</h4>
+        }
+        else
+        {
+            ViewBag.NumeroTarea++;
+            <h3>@ViewBag.NumeroTarea</h3>
+            <p><b>Nombre:</b> @tareat.NombreTarea</p>
+            <p><b>Descripción:</b> @tareat.Descripcion</p>
+            <p><b>Vencimiento:</b> @tareat.FechaVencimiento.ToShortDateString()</p>
+            <p><b>Finalizada:</b> @(tareat.TareaFinalizada ? "✅" : "❌")</p>
+
+            <!-- Botones -->
+            <a href='@Url.Action("EditarTarea", "Tareas", new { tarea = tareat })' class="btn btn-primary btn-sm">✏️ Editar</a>
+            <a href='@Url.Action("EliminarTarea", "Tareas", new { tarea = tareat })' class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+            <a href='@Url.Action("FinalizarTarea", "Tareas", new { tarea = tareat })' class="btn btn-warning btn-sm">✅ Finalizar</a>
+            <a href='@Url.Action("CompartirTarea", "Tareas", new { tarea = tareat })' class="btn btn-info btn-sm">👥 Compartir</a>
+        }
+    }
 </div>

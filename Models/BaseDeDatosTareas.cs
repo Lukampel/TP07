@@ -12,7 +12,7 @@ public class BaseDeDatosTareas
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = @"
-            SELECT t.IdTarea, t.Descripcion, t.FechaVencimiento
+            SELECT t.IdTarea, t.Descripcion, t.FechaVencimiento , t.NombreTarea, t.Activa
             FROM Tareas t
             INNER JOIN UsuarioXTareas ut ON ut.IdTarea = t.IdTarea 
             INNER JOIN Usuarios u ON ut.IdUsuario = u.IdUsuario
@@ -27,37 +27,37 @@ public class BaseDeDatosTareas
 
     public static void AgregarTarea(Tarea tar)
     {
-        string query = "INSERT INTO Tareas (NombreTarea, Descripcion, Activo, TareaFinalizada) VALUES (@pNombreTarea, @pDescripcion, @pActivo, @pTareaFinalizada)";
+        string query = "INSERT INTO Tareas (NombreTarea, Descripcion, Activa, TareaFinalizada, FechaVencimiento) VALUES (@pNombreTarea, @pDescripcion, @pActiva, @pTareaFinalizada, @pFechaVencimiento)";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActivo = tar.Activo,pTareaFinalizada = tar.TareaFinalizada});
+            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActiva = tar.Activa,pTareaFinalizada = tar.TareaFinalizada, pFechaVencimiento = tar.FechaVencimiento});
         }
     }
     public static void EditarTarea(Tarea tar) 
     {
-        string query = "UPDATE Tareas SET (NombreTarea, Descripcion, Activo, TareaFinalizada) VALUES (@pNombreTarea, @pDescripcion, @pActivo, @pTareaFinalizada)";
+        string query = "UPDATE Tareas SET (NombreTarea, Descripcion, Activa, TareaFinalizada, FechaVencimiento) VALUES (@pNombreTarea, @pDescripcion, @pActiva, @pTareaFinalizada, @pFechaVencimiento)";
          using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActivo = tar.Activo, pTareaFinalizada = tar.TareaFinalizada });
+            connection.Execute(query, new { pNombreTarea = tar.NombreTarea, pDescripcion = tar.Descripcion, pActiva = tar.Activa, pTareaFinalizada = tar.TareaFinalizada, pFechaVencimiento = tar.FechaVencimiento });
         }
     }
     public static void EliminarTarea(Tarea tar) 
     {
-    string query = "UPDATE Tareas SET Activo = 0 WHERE IdTarea = @IdTarea";
+    string query = "UPDATE Tareas SET Activa = 0 WHERE IdTarea = @pIdTarea";
 
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        connection.Execute(query, new { tar.IdTarea });
+        connection.Execute(query, new { pIdTarea = tar.IdTarea });
    }
 
     }
    public static void TerminarTarea(Tarea tar) 
 {
-    string query = "UPDATE Tareas SET TareaFinalizada = 0 WHERE IdTarea = @IdTarea";
+    string query = "UPDATE Tareas SET Activa = 0 WHERE IdTarea = @pIdTarea";
 
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
-        connection.Execute(query, new { tar.IdTarea });
+        connection.Execute(query, new { pIdTarea = tar.IdTarea });
    }
    }
 

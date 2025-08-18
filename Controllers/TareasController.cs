@@ -14,7 +14,7 @@ public IActionResult ObtenerListaTareas()
     var userString = HttpContext.Session.GetString("user");
     if (string.IsNullOrEmpty(userString))
     {
-        return RedirectToAction("Index", "Usuarios"); // o a donde corresponda
+        return RedirectToAction("Index", "Usuarios"); 
     }
 
     Usuario usu = Objeto.StringToObject<Usuario>(userString);
@@ -24,15 +24,9 @@ public IActionResult ObtenerListaTareas()
     return View("ListaTareas", "Tareas");
 }
 
-public IActionResult CrearTarea(string NombreTarea, string Descripcion, bool Activo, bool TareaFinalizada) 
+public IActionResult CrearTarea(Tarea nuevaTarea) 
 {
-    Tarea nuevaTarea = new Tarea
-    {
-        NombreTarea = NombreTarea,
-        Descripcion = Descripcion,
-        Activo = Activo,
-        TareaFinalizada = TareaFinalizada
-    };
+    
 
     BaseDeDatosTareas.AgregarTarea(nuevaTarea);
 
@@ -40,13 +34,13 @@ public IActionResult CrearTarea(string NombreTarea, string Descripcion, bool Act
 }
 
 
-public IActionResult EditarTarea(string NombreTarea, string Descripcion, bool Activo, bool TareaFinalizada)
+public IActionResult EditarTarea(string NombreTarea, string Descripcion, bool Activa, bool TareaFinalizada)
 {
     Tarea tareaParaEditar = new Tarea
     {
         NombreTarea = NombreTarea,
         Descripcion = Descripcion,
-        Activo = Activo,
+        Activa = Activa,
         TareaFinalizada = TareaFinalizada
     };
 
@@ -56,12 +50,12 @@ public IActionResult EditarTarea(string NombreTarea, string Descripcion, bool Ac
     return RedirectToAction("ObtenerListaTareas");
 }
 
-public IActionResult EliminarTarea(int Id){
+public IActionResult EliminarTarea(Tarea tarea){
     
     Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
 
     ViewBag.ListaTareas = BaseDeDatosTareas.LevantarTareas(usu.Nombre);
-    ViewBag.ListaTareas[Id].Activo = false;
+    BaseDeDatosTareas.EliminarTarea(tarea);
 
     return RedirectToAction("ObtenerListaTareas");
 }
@@ -70,13 +64,15 @@ public IActionResult FinalizarTarea(int Id){
     Usuario usu = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("user"));
     ViewBag.ListaTareas = BaseDeDatosTareas.LevantarTareas(usu.Nombre);
 
-    if(ViewBag.ListaTareas[Id].Activo)
-    ViewBag.ListaTareas[Id].Activo = false;
+    if(ViewBag.ListaTareas[Id].Activa)
+    ViewBag.ListaTareas[Id].Activa = false;
 
     return RedirectToAction("ObtenerListaTareas");
 }
 
-
+public IActionResult NuevaTarea(){
+    return View ("NuevaTarea");
+}
 public IActionResult ListaTareas()
 {
     return View("ListaTareas");
